@@ -137,6 +137,7 @@ const WorldMapLeaflet = () => {
         center={[20, 0]}
         zoom={2}
         style={{ height: "100%", width: "100%" }}
+        key={selectedMarker ? selectedMarker.name : "default"}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -154,7 +155,7 @@ const WorldMapLeaflet = () => {
             )
             .map((line, index) => (
               <Polyline
-                key={index}
+                key={`${selectedMarker.name}-${index}`} // Ensure unique key for each line
                 positions={[line.from, line.to]}
                 color="#FF5533"
                 weight={1}
