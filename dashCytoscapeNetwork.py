@@ -17,12 +17,18 @@ def generate_ait_data(num_ait):
 
     # Generate upstream and downstream connections ensuring no overlaps
     for i in range(num_ait):
-        available_nodes = set(ids) - {ids[i]}  # Exclude the current node to avoid self-loop
-        upstream = random.sample(available_nodes, random.randint(0, min(3, len(available_nodes))))
+        available_nodes = list(set(ids) - {ids[i]})  # Exclude the current node to avoid self-loop
+        if available_nodes:
+            upstream = random.sample(available_nodes, min(3, len(available_nodes)))
+        else:
+            upstream = []
         
         # Ensure downstream does not have common elements with upstream
-        remaining_nodes = available_nodes - set(upstream)
-        downstream = random.sample(remaining_nodes, random.randint(0, min(3, len(remaining_nodes))))
+        remaining_nodes = list(set(available_nodes) - set(upstream))
+        if remaining_nodes:
+            downstream = random.sample(remaining_nodes, min(3, len(remaining_nodes)))
+        else:
+            downstream = []
         
         upstream_list.append(upstream)
         downstream_list.append(downstream)
@@ -42,7 +48,7 @@ def generate_ait_data(num_ait):
     return df
 
 # Example usage
-df = generate_ait_data(2000)
+df = generate_ait_data(1000)
 
 
 # Sample DataFrame with multiple upstream and downstream connections
@@ -121,8 +127,8 @@ app.layout = html.Div([
                             {
                                 'selector': 'node',
                                 'style': {
-                                    'width': 8,               # Reduce node size
-                                    'height': 8,
+                                    'width': 5,               # Reduce node size
+                                    'height': 5,
                                     'label': 'data(label)',
                                     'font-size': '6px'         # Smaller font sizes for labels
                                 }
