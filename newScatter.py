@@ -1,3 +1,4 @@
+import dash
 from dash import dcc, html
 import plotly.graph_objects as go
 import pandas as pd
@@ -13,7 +14,7 @@ data = {
 }
 df = pd.DataFrame(data)
 
-# Define color mapping for status
+# Define color mapping for each status
 status_colors = {
     'up': 'red',
     'down': 'green',
@@ -24,20 +25,24 @@ status_colors = {
 def create_scatter_plot_with_lines(data, title):
     # Scatter plot traces for each status to generate a legend
     scatter_traces = []
-    for status in status_colors.keys():
+    for status, color in status_colors.items():
+        # Filter data for the current status
         status_data = data[data['status'] == status]
-        scatter_trace = go.Scatter3d(
-            x=status_data['x'],
-            y=status_data['y'],
-            z=status_data['z'],
-            mode='markers',
-            name=f"Status: {status.capitalize()}",  # Legend label
-            marker=dict(size=5, color=status_colors[status]),
-            text=status_data['label'],
-            hovertemplate="Label: %{text}<br>X: %{x}<br>Y: %{y}<br>Z: %{z}<br>Status: " + status.capitalize() + "<extra></extra>",
-            showlegend=True
-        )
-        scatter_traces.append(scatter_trace)
+        
+        # Only add trace if there's data for this status
+        if not status_data.empty:
+            scatter_trace = go.Scatter3d(
+                x=status_data['x'],
+                y=status_data['y'],
+                z=status_data['z'],
+                mode='markers',
+                name=f"Status: {status.capitalize()}",  # Legend label
+                marker=dict(size=5, color=color),
+                text=status_data['label'],
+                hovertemplate="Label: %{text}<br>X: %{x}<br>Y: %{y}<br>Z: %{z}<br>Status: " + status.capitalize() + "<extra></extra>",
+                showlegend=True
+            )
+            scatter_traces.append(scatter_trace)
 
     # Line traces for each point connecting to Z-axis
     line_traces = []
@@ -61,8 +66,13 @@ def create_scatter_plot_with_lines(data, title):
     )
     return dcc.Graph(figure=fig, style={'height': '400px'})
 
+app = dash.Dash(__name__)
+
 # Layout with a single scatter plot
-layout = dbc.Container(fluid=True, children=[
+app.layout = dbc.Container(fluid=True, children=[
     html.H2("3D Scatter Plot with Lines to Z-axis and Status-Based Coloring"),
     create_scatter_plot_with_lines(df, "3D Scatter with Z-Axis Lines and Status Coloring")
 ])
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
