@@ -1,5 +1,5 @@
 import dash
-from dash import dcc, html
+from dash import dcc, html, Input, Output
 import plotly.graph_objects as go
 import pandas as pd
 import dash_bootstrap_components as dbc
@@ -22,7 +22,7 @@ status_colors = {
 }
 
 # Function to create a 3D scatter plot with status-based coloring and labels on hover
-def create_scatter_plot_with_lines(data, title):
+def create_scatter_plot_with_lines(data):
     # Scatter plot traces for each status to generate a legend
     scatter_traces = []
     for status, color in status_colors.items():
@@ -60,19 +60,56 @@ def create_scatter_plot_with_lines(data, title):
     # Combine all traces into the figure
     fig = go.Figure(data=scatter_traces + line_traces)
     fig.update_layout(
-        title=title,
         margin=dict(l=0, r=0, t=30, b=0),
         scene=dict(zaxis_title='Z Axis')
     )
-    return dcc.Graph(figure=fig, style={'height': '400px'})
+    return fig
 
-app = dash.Dash(__name__)
+# Create the Dash app
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-# Layout with a single scatter plot
 app.layout = dbc.Container(fluid=True, children=[
-    html.H2("3D Scatter Plot with Lines to Z-axis and Status-Based Coloring"),
-    create_scatter_plot_with_lines(df, "3D Scatter with Z-Axis Lines and Status Coloring")
+    html.H2("3D Scatter Plot with Node Details on Click"),
+    
+    # Graph for the scatter plot
+    dcc.Graph(
+        id="scatter-plot",
+        figure=create_scatter_plot_with_lines(df),
+        style={'height': '400px'}
+    ),
+    
+    # Div to display node details
+    html.Div(id="node-details", style={'marginTop': '20px'})
 ])
+
+# Callback to update node details on click
+@app.callback(
+    Output("node-details", "children"),
+    Input("scatter-plot", "clickData")
+)
+def display_node_details(clickData):
+    if clickData is None:
+        return "Click on a node to see details."
+    
+    # Extract information about the clicked node
+    point_data = clickData['points'][0]
+    label = point_data['text']
+    x = point_data['x']
+    y = point_data['y']
+    z = point_data['z']
+    status = next((df[df['label'] == label]['status'].values[0]), "Unknown")
+
+    # Display node details
+    details = f"""
+    **Node Details**
+    - **Label**: {label}
+    - **X**: {x}
+    - **Y**: {y}
+    - **Z**: {z}
+    - **Status**: {status.capitalize()}
+    """
+    
+    return dcc.Markdown(details)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
