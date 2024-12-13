@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Papa from "papaparse";
+import { DataGrid } from "@mui/x-data-grid";
 
 const App = () => {
   const [allData, setAllData] = useState([]);
@@ -47,58 +48,58 @@ const App = () => {
       });
   }, []);
 
+  // Prepare columns and rows for the allData Data Grid
+  const allDataColumns = [
+    { field: "appName", headerName: "App Name", width: 150 },
+    { field: "upstreamName", headerName: "Upstream Name", width: 150 },
+    { field: "tables", headerName: "Table", width: 150 },
+  ];
+
+  const allDataRows = allData.map((row, index) => ({
+    id: index, // Add a unique `id` field for each row (required by Data Grid)
+    ...row,
+  }));
+
+  // Prepare columns and rows for the commonTables Data Grid
+  const commonTablesColumns = [
+    { field: "table", headerName: "Table", width: 150 },
+    {
+      field: "apps",
+      headerName: "Apps",
+      width: 300,
+      renderCell: (params) => params.value.join(", "), // Join the array of apps into a string
+    },
+  ];
+
+  const commonTablesRows = commonTables.map((entry, index) => ({
+    id: index, // Add a unique `id` field for each row (required by Data Grid)
+    ...entry,
+  }));
+
   return (
-    <div style={{ display: "flex", padding: "20px" }}>
+    <div style={{ display: "flex", padding: "20px", gap: "20px" }}>
       {/* Left Side: Display all table data */}
-      <div style={{ flex: 1, marginRight: "20px" }}>
+      <div style={{ flex: 1 }}>
         <h2>All Table Data</h2>
-        {allData.length > 0 ? (
-          <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr>
-                <th>App Name</th>
-                <th>Upstream Name</th>
-                <th>Table</th>
-              </tr>
-            </thead>
-            <tbody>
-              {allData.map((row, index) => (
-                <tr key={index}>
-                  <td>{row.appName}</td>
-                  <td>{row.upstreamName}</td>
-                  <td>{row.tables}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>Loading data...</p>
-        )}
+        <DataGrid
+          rows={allDataRows}
+          columns={allDataColumns}
+          autoHeight
+          pageSize={5}
+          rowsPerPageOptions={[5, 10, 20]}
+        />
       </div>
 
       {/* Right Side: Display common tables with apps */}
       <div style={{ flex: 1 }}>
         <h2>Common Tables with Associated Apps</h2>
-        {commonTables.length > 0 ? (
-          <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr>
-                <th>Table</th>
-                <th>Apps</th>
-              </tr>
-            </thead>
-            <tbody>
-              {commonTables.map((entry, index) => (
-                <tr key={index}>
-                  <td>{entry.table}</td>
-                  <td>{entry.apps.join(", ")}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No common tables found or error in processing the file.</p>
-        )}
+        <DataGrid
+          rows={commonTablesRows}
+          columns={commonTablesColumns}
+          autoHeight
+          pageSize={5}
+          rowsPerPageOptions={[5, 10, 20]}
+        />
       </div>
     </div>
   );
