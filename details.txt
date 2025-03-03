@@ -1,0 +1,8 @@
+The CytoscapeGraph Component is a React-based graph visualization module built using cytoscape.js and react-cytoscapejs. It allows users to:
+	•	Pass a dataset containing nodes and edges dynamically.
+	•	Render an interactive graph with multiple layouts (e.g., Euler, Grid, Breadth-first).
+	•	Click on nodes to display detailed metadata, aiding in deeper analysis.
+	•	Configure styling, zoom levels, and layouts based on team requirements.
+	•	Integrate seamlessly into various applications, dashboards, or analytics tools.
+
+By making this component modular and configurable, teams across the organization can leverage the same core visualization engine while customizing it for their specific needs. This reduces redundancy, improves maintainability, and enhances cross-team collaboration.
