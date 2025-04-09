@@ -1,79 +1,57 @@
-import { Component } from '@angular/core';
-import { BaseChartDirective } from 'ng2-charts';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import React from 'react';
+import BarGraph from './components/BarGraph';
+import PieChart from './components/PieChart';
 
-@Component({
-  selector: 'app-line-chart',
-  standalone: true,
-  imports: [BaseChartDirective],
-  templateUrl: './line-chart.component.html',
-  styleUrl: './line-chart.component.scss',
-})
-export class LineChartComponent {
-  lineChartType: ChartType = 'line';
-
-  lineChartOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    plugins: {
-      legend: { display: true },
+const sampleBarData = {
+  labels: ['Red', 'Blue', 'Yellow'],
+  datasets: [
+    {
+      label: 'Votes',
+      data: [12, 19, 3],
+      backgroundColor: ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)'],
     },
-    scales: {
-      x: {},
-      y: { beginAtZero: true },
-    },
-  };
-
-  lineChartData: ChartData<'line'> = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    datasets: [
-      {
-        label: 'Sales',
-        data: [65, 59, 80, 81, 56, 55],
-        fill: false,
-        borderColor: 'blue',
-        tension: 0.4,
-      },
-      {
-        label: 'Revenue',
-        data: [30, 40, 60, 75, 50, 90],
-        fill: false,
-        borderColor: 'green',
-        tension: 0.4,
-      },
-    ],
-  };
-}
-
-
-
-<div class="chart-container">
-  <canvas
-    baseChart
-    [data]="lineChartData"
-    [options]="lineChartOptions"
-    [type]="lineChartType"
-  >
-  </canvas>
-</div>
-
-
-.chart-container {
-  width: 100%;
-  max-width: 600px;
-  margin: auto;
-}
-
-
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
-
-import { routes } from './app.routes';
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
-    provideCharts(withDefaultRegisterables()),
   ],
 };
+
+const barOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+  },
+};
+
+const samplePieData = {
+  labels: ['Apple', 'Banana', 'Cherry'],
+  datasets: [
+    {
+      label: 'Fruits',
+      data: [10, 20, 30],
+      backgroundColor: ['#FF6384', '#FFCE56', '#36A2EB'],
+    },
+  ],
+};
+
+const pieOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'right',
+    },
+  },
+};
+
+const App = () => {
+  return (
+    <div style={{ padding: '20px' }}>
+      <h2>Bar Graph</h2>
+      <BarGraph data={sampleBarData} options={barOptions} style={{ height: '300px' }} />
+
+      <h2>Pie Chart</h2>
+      <PieChart data={samplePieData} options={pieOptions} style={{ height: '300px' }} />
+    </div>
+  );
+};
+
+export default App;
