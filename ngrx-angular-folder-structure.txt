@@ -1,0 +1,71 @@
+src/
+├── app/
+│   ├── core/                   # Singleton services & core logic (app-wide)
+│   │   ├── services/
+│   │   ├── guards/
+│   │   ├── interceptors/
+│   │   └── core.module.ts
+│
+│   ├── shared/                 # Shared reusable components, pipes, directives
+│   │   ├── components/
+│   │   ├── pipes/
+│   │   ├── directives/
+│   │   └── shared.module.ts
+│
+│   ├── features/               # Main feature modules/pages
+│   │   ├── home/
+│   │   │   ├── components/     # Feature-specific reusable components
+│   │   │   ├── pages/          # Routed components (views/pages)
+│   │   │   ├── store/          # Feature state (NgRx)
+│   │   │   ├── home-routing.module.ts
+│   │   │   └── home.module.ts
+│   │   ├── profile/
+│   │   └── settings/
+│   │       ├── components/
+│   │       ├── pages/
+│   │       ├── store/
+│   │       ├── settings-routing.module.ts
+│   │       └── settings.module.ts
+│
+│   ├── state/                  # Global state (NgRx)
+│   │   ├── app.state.ts
+│   │   ├── reducers/
+│   │   ├── actions/
+│   │   └── selectors/
+│
+│   ├── app-routing.module.ts
+│   └── app.module.ts
+│
+├── assets/
+│   ├── images/
+│   └── styles/
+│
+├── environments/
+│   ├── environment.ts
+│   └── environment.prod.ts
+│
+└── main.ts
+
+
+
+home/
+├── components/
+│   └── home-card/
+│       ├── home-card.component.ts
+│       ├── home-card.component.html
+│       └── home-card.component.scss
+│
+├── pages/
+│   └── home-page/
+│       ├── home-page.component.ts
+│       ├── home-page.component.html
+│       └── home-page.component.scss
+│
+├── store/
+│   ├── home.actions.ts
+│   ├── home.reducer.ts
+│   ├── home.selectors.ts
+│   └── home.state.ts
+│
+├── home-routing.module.ts
+└── home.module.ts
