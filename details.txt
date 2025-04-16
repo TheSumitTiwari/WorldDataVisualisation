@@ -1,41 +1,21 @@
-The CytoscapeGraph Component is a React-based graph visualization module built using cytoscape.js and react-cytoscapejs. It allows users to:
-	•	Pass a dataset containing nodes and edges dynamically.
-	•	Render an interactive graph with multiple layouts (e.g., Euler, Grid, Breadth-first).
-	•	Click on nodes to display detailed metadata, aiding in deeper analysis.
-	•	Configure styling, zoom levels, and layouts based on team requirements.
-	•	Integrate seamlessly into various applications, dashboards, or analytics tools.
+Setting up unit testing and code coverage in Angular apps is often inconsistent, time-consuming, and tied to outdated tools like Karma + Jasmine, leading to poor testing practices and low coverage.
 
-By making this component modular and configurable, teams across the organization can leverage the same core visualization engine while customizing it for their specific needs. This reduces redundancy, improves maintainability, and enhances cross-team collaboration.
+Description
+It is a reusable standalone Angular component template pre-configured with Jest for modern unit testing and automatic code coverage report generation. It replaces the traditional Karma-Jasmine setup with a faster, cleaner, and more scalable approach using Testing Library and Jest-DOM. This solution streamlines the testing workflow, encourages test-driven development (TDD), and ensures higher code quality across Angular projects. By integrating testing from the start, it saves setup time, improves team consistency, and supports CI/CD environments effortlessly.
+
+Benifits:
+Benefits
+- Faster Test Execution: Uses Jest's Node-based runner, eliminating slow browser-based tests.
+- Reusable Template: Can be easily integrated into any Angular project for consistent test setup.
+- Built-in Code Coverage: Automatically generates detailed coverage reports with a single command.
+- Encourages TDD: Promotes writing tests alongside development, improving reliability.
+- Standalone Component Structure: Aligns with modern Angular architecture best practices.
+- CI/CD Ready: Easily integrates with pipelines for automated test and coverage reporting.
+- Cleaner Test Syntax: Uses Testing Library for more readable, maintainable tests.
+- Team Standardization: Unifies testing practices across developers and projects.
 
 
 
-Benefits of the Reusable CytoscapeGraph Component
-	1.	Standardized Graph Visualization Across Teams
-	•	Provides a consistent way to visualize complex networks for different use cases.
-	•	Eliminates the need for teams to build custom graph solutions from scratch.
-	2.	Configurable and Extensible
-	•	Supports dynamic data input, custom node styles, and various layout options.
-	•	Can be extended with additional features like filtering, search, and real-time updates.
-	3.	Improved Decision-Making and Analysis
-	•	Enables teams to interactively explore relationships, dependencies, and impact areas.
-	•	Helps in identifying bottlenecks, risks, and optimization opportunities.
-	4.	Seamless Integration
-	•	Can be embedded into dashboards, analytics tools, or internal applications.
-	•	Works with different data sources (APIs, databases, JSON files, etc.).
-	5.	Enhanced User Experience
-	•	Provides intuitive interaction with zoom, pan, and node click functionalities.
-	•	Improves readability and navigation of large datasets.
-	6.	Reduces Development Effort and Costs
-	•	Saves engineering time by offering a ready-to-use visualization component.
-	•	Reduces maintenance overhead by centralizing graph visualization logic.
-	7.	Cross-Team Collaboration
-	•	Enables different departments (engineering, infrastructure, business, risk, etc.) to leverage the same visualization tool.
-	•	Promotes knowledge sharing and a unified approach to data representation.
-	8.	Scalable and Performance Optimized
-	•	Supports large graphs with thousands of nodes and edges efficiently.
-	•	Uses Cytoscape’s performance optimizations for smooth rendering and interaction.
-	9.	Future-Proof and Technology-Agnostic
-	•	Can be enhanced with new features like AI-based insights, predictive analytics, or real-time monitoring.
-	•	Works with modern frontend technologies and can be adapted for different frameworks if needed.
 
-By implementing this component, the organization can standardize network visualization, reduce redundancy, and enhance decision-making capabilities across multiple teams.
+
+
